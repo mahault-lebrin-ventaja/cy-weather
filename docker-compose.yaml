@@ -40,6 +40,43 @@ services:
     networks:
       - cy-weather-network
 
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    networks:
+      - cy-weather-network
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    restart: unless-stopped
+    networks:
+      - cy-weather-network
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
 networks:
   cy-weather-network:
     driver: bridge
