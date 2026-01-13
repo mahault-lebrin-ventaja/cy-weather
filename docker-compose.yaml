@@ -73,6 +73,7 @@ services:
     volumes:
       - '/:/host:ro,rslave'
 
+
 volumes:
   prometheus_data:
   grafana_data:
