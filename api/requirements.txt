@@ -61,7 +61,7 @@ idna==3.11
     #   requests
 jinja2==3.1.6
     # via fastapi
-markdown-it-py==4.0.0
+markdown-it-py
     # via rich
 markupsafe==3.0.3
     # via jinja2
